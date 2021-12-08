@@ -22,22 +22,32 @@ public class GamePanel extends JPanel implements ActionListener {
     Timer timer;
     Random random;
     GamePanel(){
+        random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_HEIGHT,SCREEN_WIDTH));
         this.setBackground(Color.black);
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
+        startGame();
     }
     public void startGame(){
-
+        newApple();
+        running = true;
+        timer = new Timer(DELAY,this);
+        timer.start();
     }
     public void paintComponent(Graphics g){
-
+        super.paintComponent(g);
+        draw(g);
     }
     public void draw(Graphics g){
-
+        if(running){
+            g.setColor(Color.red);
+            g.fillOval(appleX,appleY,UNIT_SIZE,UNIT_SIZE);
+        }
     }
     public void newApple(){
-
+        appleX = random.nextInt(SCREEN_WIDTH/UNIT_SIZE)*UNIT_SIZE;
+        appleY = random.nextInt(SCREEN_HEIGHT/UNIT_SIZE)*UNIT_SIZE;
     }
     public void move(){
 
@@ -56,6 +66,8 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(running){
+            newApple();
+        }
     }
 }
