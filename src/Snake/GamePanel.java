@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -84,13 +85,64 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
     public void checkCollisions(){
+        for(int i=1; i<bodyParts; i++){ //checks if head collides with body
+            if(x[0]==x[i] && y[0]==y[i]) {
+                running = false;
+                break;
+            }
+        }
+        if(x[0] < 0)//checks if head touches left border
+            running = false;
+        if(x[0] > SCREEN_WIDTH) //checks if head touches right border
+            running = false;
+        if(y[0] < 0)//checks if head touches top border
+            running = false;
+        if(y[0] > SCREEN_HEIGHT)//checks if head touches bottom border
+            running = false;
+        //If u want to make snake teleport to the left side when he hit right etc. use this 4 if's instead
+        /*
+        if(x[0] < 0) {
+            x[0] = SCREEN_WIDTH;
+        }
+        if(x[0] > SCREEN_WIDTH) {
+            x[0] = 0;
+        }
+        if(y[0] < 0) {
+            y[0] = SCREEN_HEIGHT;
+        }
+        if(y[0] > SCREEN_HEIGHT) {
+            y[0] = 0;
+        }
+         */
 
     }
     public void gameOver(){
 
     }
     public class MyKeyAdapter extends KeyAdapter{
-
+        public void keyPressed(KeyEvent e){
+            switch(e.getKeyCode()){
+                case KeyEvent.VK_LEFT:
+                    if(direction != 'R'){
+                        direction = 'L';
+                    }
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    if(direction!='L'){
+                        direction = 'R';
+                    }
+                    break;
+                case KeyEvent.VK_UP:
+                    if(direction!='D'){
+                        direction='U';
+                    }
+                    break;
+                case KeyEvent.VK_DOWN:
+                    if(direction!='U'){
+                        direction='D';
+                    }
+            }
+        }
     }
     @Override
     public void actionPerformed(ActionEvent e) {
