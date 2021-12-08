@@ -44,6 +44,15 @@ public class GamePanel extends JPanel implements ActionListener {
         if(running){
             g.setColor(Color.red);
             g.fillOval(appleX,appleY,UNIT_SIZE,UNIT_SIZE);
+            /* Use this for instead of the next one if u want to make ur snake a DISCO SNAKE!!!
+            for(int i=0; i<bodyParts; i++){
+                if(i==0)
+                    g.setColor(Color.green);
+                else
+                    g.setColor(new Color(random.nextInt(255),random.nextInt(255),random.nextInt(255)));
+                g.fillRect(x[i],y[i],UNIT_SIZE,UNIT_SIZE);
+            }
+            */
             g.setColor(Color.green);
             for(int i=0; i<bodyParts; i++){
                 g.fillRect(x[i],y[i],UNIT_SIZE,UNIT_SIZE);
@@ -52,6 +61,8 @@ public class GamePanel extends JPanel implements ActionListener {
             g.setFont(new Font("Ink Free", Font.BOLD, 40));
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + applesEaten))/2,g.getFont().getSize());
+        }else{
+            gameOver(g);
         }
     }
     public void newApple(){
@@ -116,7 +127,15 @@ public class GamePanel extends JPanel implements ActionListener {
          */
 
     }
-    public void gameOver(){
+    public void gameOver(Graphics g){
+        g.setColor(Color.cyan);
+        g.setFont(new Font("Ink Free", Font.BOLD, 40));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + applesEaten))/2,g.getFont().getSize());
+        g.setColor(Color.red);
+        g.setFont(new Font("Ink Free",Font.BOLD, 75));
+        metrics = getFontMetrics(g.getFont());
+        g.drawString("GAME OVER :(",(SCREEN_WIDTH - metrics.stringWidth("GAME OVER :("))/2, SCREEN_HEIGHT/2);
 
     }
     public class MyKeyAdapter extends KeyAdapter{
